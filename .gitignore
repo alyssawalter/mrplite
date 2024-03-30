@@ -1,5 +1,8 @@
 # Ignore .env file
 .env
 
-# Ignore secrets.py file
-secrets.py
+# Ignore secrets_temp.py file
+secrets_temp.py
+
+
+

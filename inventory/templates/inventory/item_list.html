@@ -1,0 +1,22 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Items List</title>
+</head>
+<body>
+    <h1>Items List</h1>
+
+        <!-- Add button to create a new item -->
+    <a href="{% url 'inventory:create_item' %}">
+        <button>Create New Item</button>
+    </a>
+
+    <ul>
+        {% for item in items %}
+             <li><a href="{% url 'inventory:item_detail' item_sku=item.item_sku %}">{{ item.item_sku }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

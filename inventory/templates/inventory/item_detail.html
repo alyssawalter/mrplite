@@ -1,0 +1,26 @@
+<!-- inventory/templates/inventory/item_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Detail</title>
+</head>
+<body>
+
+    <h1>Item Detail</h1>
+
+    <p><strong>SKU:</strong> {{ item.item_sku }}</p>
+    <p><strong>Name:</strong> {{ item.item_name }}</p>
+    <p><strong>Group:</strong> {{ item.item_group }}</p>
+    <p><strong>Unit of Measurement:</strong> {{ item.unit_of_measurement }}</p>
+    <p><strong>Reorder Point:</strong> {{ item.reorder_point }}</p>
+    <p><strong>Selling Price:</strong> {{ item.selling_price }}</p>
+    <p><strong>Manufactured:</strong> {{ item.manufactured }}</p>
+    <p><strong>Min Qty for Manufacturing:</strong> {{ item.min_qty_for_manufacturing }}</p>
+
+    <a href="{% url 'inventory:edit_item' item_sku=item.item_sku %}"><button>Edit</button></a>
+    <a href="{% url 'inventory:items_list' %}"><button>Back</button></a>
+
+</body>
+</html>
