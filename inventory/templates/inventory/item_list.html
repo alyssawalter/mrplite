@@ -15,7 +15,7 @@
 
     <ul>
         {% for item in items %}
-             <li><a href="{% url 'inventory:item_detail' item_sku=item.item_sku %}">{{ item.item_sku }}</a></li>
+             <li><a href="{% url 'inventory:item_detail' pk=item.item_sku %}">{{ item.item_sku }}</a></li>
         {% endfor %}
     </ul>
 </body>
