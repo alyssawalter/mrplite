@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Groups List</title>
+</head>
+<body>
+    <h1>Item Groups List</h1>
+    <ul>
+        {% for item_group in item_groups %}
+            <li><a href="{% url 'inventory:item_group_detail' pk=item_group.pk %}">{{ item_group.item_group_name }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'inventory:create_item_group' %}">Create New Item Group</a>
+</body>
+</html>

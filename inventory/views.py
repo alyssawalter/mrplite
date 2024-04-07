@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.urls import reverse
-from .models import Item
-from .forms import ItemForm, EditItemForm
+from django.urls import reverse_lazy
+from .models import Item, ItemGroup
+from .forms import ItemForm, EditItemForm, EditItemGroupForm, ItemGroupForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 
 def items_list(request):
@@ -44,3 +45,32 @@ def edit_item(request, item_sku):
     return render(request, 'inventory/edit_item.html', {'form': form, 'item': item})
 
 
+class ItemGroupListView(ListView):
+    model = ItemGroup
+    template_name = 'inventory/item_group_list.html'
+    context_object_name = 'item_groups'
+
+
+class ItemGroupDetailView(DetailView):
+    model = ItemGroup
+    template_name = 'inventory/item_group_detail.html'
+    context_object_name = 'item_group'
+
+
+class CreateItemGroupView(CreateView):
+    model = ItemGroup
+    form_class = ItemGroupForm
+    template_name = 'inventory/create_item_group.html'
+
+    def get_success_url(self):
+        return reverse_lazy('inventory:item_group_detail', kwargs={'pk': self.object.pk})
+
+
+class EditItemGroupView(UpdateView):
+    model = ItemGroup
+    form_class = EditItemGroupForm
+    template_name = 'inventory/edit_item_group.html'
+    context_object_name = 'item_group'
+
+    def get_success_url(self):
+        return reverse_lazy('inventory:item_group_detail', kwargs={'pk': self.object.pk})

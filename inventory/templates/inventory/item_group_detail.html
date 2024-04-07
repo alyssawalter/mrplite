@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Group Detail</title>
+</head>
+<body>
+    <h1>Item Group Detail</h1>
+    <p><strong>Number:</strong> {{ item_group.item_group_number }}</p>
+    <p><strong>Name:</strong> {{ item_group.item_group_name }}</p>
+    <a href="{% url 'inventory:edit_item_group' pk=item_group.pk %}">Edit</a>
+</body>
+</html>
