@@ -20,6 +20,9 @@
     <p><strong>Min Qty for Manufacturing:</strong> {{ item.min_qty_for_manufacturing }}</p>
 
     <a href="{% url 'inventory:edit_item' pk=item.item_sku %}"><button>Edit</button></a>
+
+    <a href="{% url 'inventory:item_delete' pk=item.pk %}" class="btn btn-danger">Delete</a>
+
     <a href="{% url 'inventory:item_list' %}"><button>Back</button></a>
 
 </body>

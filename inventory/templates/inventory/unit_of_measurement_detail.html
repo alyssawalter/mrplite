@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit of Measurement Detail</title>
+</head>
+<body>
+    <h1>Unit of Measurement Detail</h1>
+    <p><strong>ID:</strong> {{ unit_of_measurement.pk }}</p>
+    <p><strong>Name:</strong> {{ unit_of_measurement.unit_of_measurement }}</p>
+    <a href="{% url 'inventory:edit_unit_of_measurement' pk=unit_of_measurement.pk %}">Edit</a>
+    <a href="{% url 'inventory:unit_of_measurement_delete' pk=unit_of_measurement.pk %}" class="btn btn-danger">Delete</a>
+    <a href="{% url 'inventory:unit_of_measurement_list' %}"><button>Back</button></a>
+
+</body>
+</html>

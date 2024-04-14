@@ -10,5 +10,10 @@
     <p><strong>Number:</strong> {{ item_group.item_group_number }}</p>
     <p><strong>Name:</strong> {{ item_group.item_group_name }}</p>
     <a href="{% url 'inventory:edit_item_group' pk=item_group.pk %}">Edit</a>
+
+     <a href="{% url 'inventory:item_group_delete' pk=item_group.pk %}" class="btn btn-danger">Delete</a>
+
+    <a href="{% url 'inventory:item_group_list' %}"><button>Back</button></a>
+
 </body>
 </html>

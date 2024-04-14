@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.urls import reverse_lazy
-from .models import Item, ItemGroup
-from .forms import ItemForm, EditItemForm, EditItemGroupForm, ItemGroupForm
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib import messages
+from .models import Item, ItemGroup, UnitOfMeasurement
+from .forms import ItemForm, EditItemForm, \
+    EditItemGroupForm, ItemGroupForm, \
+    UnitOfMeasurementForm, EditUnitOfMeasurementForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 
 
 class ItemListView(ListView):
@@ -41,6 +43,16 @@ class ItemUpdateView(UpdateView):
         return reverse_lazy('inventory:item_detail', kwargs={'pk': self.object.item_sku})
 
 
+class ItemDeleteView(DeleteView):
+    model = Item
+    template_name = 'inventory/item_confirm_delete.html'
+    success_url = reverse_lazy('inventory:item_list')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, 'Item deleted successfully.')
+        return super().delete(request, *args, **kwargs)
+
+
 class ItemGroupListView(ListView):
     model = ItemGroup
     template_name = 'inventory/item_group_list.html'
@@ -70,3 +82,63 @@ class EditItemGroupView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('inventory:item_group_detail', kwargs={'pk': self.object.pk})
+
+
+class ItemGroupDeleteView(DeleteView):
+    model = ItemGroup
+    template_name = 'inventory/item_group_confirm_delete.html'
+    success_url = reverse_lazy('inventory:item_group_list')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, 'Item group deleted successfully.')
+        return super().delete(request, *args, **kwargs)
+
+
+class UnitOfMeasurementListView(ListView):
+    model = UnitOfMeasurement
+    template_name = 'inventory/unit_of_measurement_list.html'
+    context_object_name = 'unit_of_measurements'
+
+
+class UnitOfMeasurementDetailView(DetailView):
+    model = UnitOfMeasurement
+    template_name = 'inventory/unit_of_measurement_detail.html'
+    context_object_name = 'unit_of_measurement'
+
+
+class CreateUnitOfMeasurementView(CreateView):
+    model = UnitOfMeasurement
+    form_class = UnitOfMeasurementForm
+    template_name = 'inventory/create_unit_of_measurement.html'
+
+    def get_success_url(self):
+        return reverse_lazy('inventory:unit_of_measurement_detail', kwargs={'pk': self.object.pk})
+
+
+class EditUnitOfMeasurementView(UpdateView):
+    model = UnitOfMeasurement
+    form_class = EditUnitOfMeasurementForm
+    template_name = 'inventory/edit_unit_of_measurement.html'
+    context_object_name = 'unit_of_measurement'
+
+    def get_success_url(self):
+        return reverse_lazy('inventory:unit_of_measurement_detail', kwargs={'pk': self.object.pk})
+
+
+class UnitOfMeasurementDeleteView(DeleteView):
+    model = UnitOfMeasurement
+    template_name = 'inventory/unit_of_measurement_confirm_delete.html'
+    success_url = reverse_lazy('inventory:unit_of_measurement_list')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, 'Unit of measurement deleted successfully.')
+        return super().delete(request, *args, **kwargs)
+
+
+class ItemSettingsView(View):
+    def get(self, request, *args, **kwargs):
+        context = {
+            'item_group_list_url': reverse_lazy('inventory:item_group_list'),
+            'unit_of_measurement_list_url': reverse_lazy('inventory:unit_of_measurement_list'),
+        }
+        return render(request, 'inventory/item_settings.html', context)
