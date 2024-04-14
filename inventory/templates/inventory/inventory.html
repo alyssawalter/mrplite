@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
+</head>
+<body>
+    <h1>Inventory</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Item SKU</th>
+                <th>Item Name</th>
+                <th>Item Group</th>
+                <th>Unit of Measurement</th>
+                <th>Unit Cost</th>
+                <th>Quantity</th>
+                <th>Physical Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.item_sku }}</td>
+                <td>{{ item.item_name }}</td>
+                <td>{{ item.item_group.item_group_name }}</td>
+                <td>{{ item.unit_of_measurement.unit_of_measurement }}</td>
+                <td>{{ item.cost }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>
+                    <form method="post">
+                        {% csrf_token %}
+                         <input type="hidden" name="item_sku" value="{{ item.item_sku }}">
+                        {{ inventory_form.quantity }}
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -20,4 +20,5 @@ urlpatterns = [
     path('unit_of_measurements/<int:pk>/edit/', EditUnitOfMeasurementView.as_view(), name='edit_unit_of_measurement'),
     path('unit_of_measurements/<int:pk>/delete/', UnitOfMeasurementDeleteView.as_view(), name='unit_of_measurement_delete'),
     path('item-settings/', ItemSettingsView.as_view(), name='item_settings'),
+    path('', inventory, name='inventory'),
 ]

@@ -17,6 +17,12 @@ class EditItemForm(forms.ModelForm):
                   'reorder_point', 'selling_price', 'manufactured', 'min_qty_for_manufacturing']
 
 
+class InventoryQuantityForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ['quantity']
+
+
 class ItemGroupForm(forms.ModelForm):
     class Meta:
         model = ItemGroup
