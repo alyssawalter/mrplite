@@ -1,12 +1,8 @@
-<!-- inventory/templates/inventory/item_detail.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Item Detail</title>
-</head>
-<body>
+{% extends 'adminlte/base.html' %}
+
+{% block title %}Inventory{% endblock %}
+
+{% block content %}
 
     <h1>Item Detail</h1>
 
@@ -25,5 +21,4 @@
 
     <a href="{% url 'inventory:item_list' %}"><button>Back</button></a>
 
-</body>
-</html>
+{% endblock %}

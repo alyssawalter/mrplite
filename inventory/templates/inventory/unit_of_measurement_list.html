@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit of Measurement List</title>
-</head>
-<body>
+{% extends 'adminlte/base.html' %}
+
+{% block title %}Unit of Measurement List{% endblock %}
+
+{% block content %}
     <h1>Unit of Measurement List</h1>
     <ul>
         {% for unit_of_measurement in unit_of_measurements %}
@@ -13,5 +10,4 @@
         {% endfor %}
     </ul>
     <a href="{% url 'inventory:create_unit_of_measurement' %}">Create New Unit of Measurement</a>
-</body>
-</html>
+{% endblock %}

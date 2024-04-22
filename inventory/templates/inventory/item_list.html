@@ -1,11 +1,8 @@
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Items List</title>
-</head>
-<body>
+{% extends 'adminlte/base.html' %}
+
+{% block title %}Items List{% endblock %}
+
+{% block content %}
     <h1>Items List</h1>
 
         <!-- Add button to create a new item -->
@@ -18,5 +15,4 @@
              <li><a href="{% url 'inventory:item_detail' pk=item.item_sku %}">{{ item.item_sku }}</a></li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}

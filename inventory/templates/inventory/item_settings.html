@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Item Settings</title>
-</head>
-<body>
+{% extends 'adminlte/base.html' %}
+
+{% block title %}Item Settings{% endblock %}
+
+{% block content %}
     <h1>Item Settings</h1>
     <ul>
         <li><a href="{{ item_group_list_url }}">Item Groups</a></li>
         <li><a href="{{ unit_of_measurement_list_url }}">Unit of Measurements</a></li>
     </ul>
-</body>
-</html>
+{% endblock %}

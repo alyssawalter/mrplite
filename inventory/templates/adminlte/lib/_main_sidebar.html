@@ -1,0 +1,79 @@
+{% extends 'adminlte/lib/_main_sidebar.html' %}
+{% load static %}
+
+<!-- Set upper left corner logo -->
+{% block logo %}
+    <a href="/" class="brand-link logo-switch">
+        <img src="{%static 'inventory/logo.png' %}" alt="MRP Lite Logo" class="brand-image-xl logo-xl"
+             style="left: 12px">
+
+    </a>
+{% endblock logo %}
+
+<!-- Remove user panel from left sidebar -->
+{% block user_panel %}
+{% endblock user_panel %}
+
+<!-- Set header for side navbar -->
+{% block nav_heading %}
+WHERE TO GO
+{% endblock nav_heading %}
+
+<!-- Define navbar links -->
+{% block nav_links %}
+
+    <!-- Inventory Section -->
+    <li class="nav-item">
+      <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-archive"></i>
+        <p>
+          Inventory
+          <i class="right fas fa-angle-left"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+          <li class="nav-item">
+          <a href="{% url 'inventory:inventory' %}" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Inventory</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'inventory:item_list' %}" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Items</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Item Settings</p>
+            <i class="right fas fa-angle-left"></i>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'inventory:unit_of_measurement_list' %}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Unit of Measurement</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'inventory:item_group_list' %}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Item Groups</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <!-- Admin Section -->
+    <li class="nav-item">
+      <a href="{% url 'admin:index' %}" class="nav-link">
+        <i class="nav-icon fas fa-cogs"></i>
+        <p>Admin</p>
+      </a>
+    </li>
+
+{% endblock nav_links %}

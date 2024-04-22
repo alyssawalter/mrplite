@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Item</title>
-</head>
-<body>
+{% extends 'adminlte/base.html' %}
+
+{% block title %}Edit Item{% endblock %}
+
+{% block content %}
     <h1>Edit Item</h1>
     <form method="post">
         {% csrf_token %}
@@ -13,5 +10,4 @@
         <button type="submit">Save</button>
         <a href="{% url 'inventory:item_detail' pk=item.item_sku %}"><button>Cancel</button></a>
     </form>
-</body>
-</html>
+{% endblock %}
