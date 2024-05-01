@@ -3,11 +3,36 @@
 {% block title %}Unit of Measurement List{% endblock %}
 
 {% block content %}
-    <h1>Unit of Measurement List</h1>
-    <ul>
-        {% for unit_of_measurement in unit_of_measurements %}
-            <li><a href="{% url 'inventory:unit_of_measurement_detail' pk=unit_of_measurement.pk %}">{{ unit_of_measurement.unit_of_measurement }}</a></li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'inventory:create_unit_of_measurement' %}">Create New Unit of Measurement</a>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-auto">
+                        <h1>Units of Measurement</h1>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{% url 'inventory:create_unit_of_measurement' %}" class="btn btn-primary">+ New UoM</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Unit of Measurement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for unit_of_measurement in unit_of_measurements %}
+                        <tr>
+                            <td><a href="{% url 'inventory:unit_of_measurement_detail' pk=unit_of_measurement.pk %}">{{ unit_of_measurement.unit_of_measurement }}</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -4,70 +4,144 @@
 
 {% block content %}
     <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-sm-1">
-                        <h1>Items</h1>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-auto">
+                            <h1>Items</h1>
+                        </div>
+                        <div class="col-auto">
+                            <a href="{% url 'inventory:create_item' %}" class="btn btn-primary">+ New Item</a>
+                        </div>
                     </div>
-                    <div class="col-sm-1">
-                        <a href="{% url 'inventory:create_item' %}" class="btn btn-primary">+ New Item</a>
-                    </div>
-                </div>
 
-                <div class="card-body table-responsive p-0">
-                    <table id="itemTable" class="table table-hover text-nowrap">
-                        <thead>
+                    <div class="card-body table-responsive p-0">
+                        <table id="itemTable" class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Item SKU
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="text" id="search_sku" name="table_search_sku" class="form-control float-right" placeholder="Search">
+                                            <div class="input-group-append">
+                                                <button id="btn_search_sku" type="submit" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        Item Name
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="text" id="search_name" name="table_search_name" class="form-control float-right" placeholder="Search">
+                                            <div class="input-group-append">
+                                                <button id="btn_search_name" type="submit" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <!-- Need to finish for other headers -->
+                                    <th>
+                                        Item Group
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="text" id="search_group" class="form-control float-right" placeholder="Search">
+                                            <div class="input-group-append">
+                                                <button id="btn_search_group" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        Unit of Measurement
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="text" id="search_unit" class="form-control float-right" placeholder="Search">
+                                            <div class="input-group-append">
+                                                <button id="btn_search_unit" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        Reorder Point
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="number" id="min_reorder" class="form-control float-right" placeholder="Min">
+                                            <input type="number" id="max_reorder" class="form-control float-right" placeholder="Max">
+                                            <div class="input-group-append">
+                                                <button id="btn_search_reorder" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        Selling Price
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="number" id="min_price" class="form-control float-right" placeholder="Min">
+                                            <input type="number" id="max_price" class="form-control float-right" placeholder="Max">
+                                            <div class="input-group-append">
+                                                <button id="btn_search_price" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        Manufactured
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="text" id="search_manufactured" class="form-control float-right" placeholder="Search">
+                                            <div class="input-group-append">
+                                                <button id="btn_search_manufactured" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        Min. Quantity for Manufacturing
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="number" id="min_qty_manufacturing" class="form-control float-right" placeholder="Search">
+                                            <div class="input-group-append">
+                                                <button id="btn_search_qty_manufacturing" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </th>
+
+                                </tr>
+                            </thead>
+                        <tbody>
+                            {% for item in items %}
                             <tr>
-                                <th>
-                                    Item SKU
-                                    <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" id="search_sku" name="table_search_sku" class="form-control float-right" placeholder="Search SKU">
-                                        <div class="input-group-append">
-                                            <button id="btn_search_sku" type="submit" class="btn btn-default">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </th>
-                                <th>
-                                    Item Name
-                                    <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" id="search_name" name="table_search_name" class="form-control float-right" placeholder="Search Name">
-                                        <div class="input-group-append">
-                                            <button id="btn_search_name" type="submit" class="btn btn-default">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </th>
-                                <!-- Need to finish for other headers -->
-
+                                <td><a href="{% url 'inventory:item_detail' pk=item.item_sku %}">{{ item.item_sku }}</a></td>
+                                <td>{{ item.item_name }}</td>
+                                <td>{{ item.item_group }}</td>
+                                <td>{{ item.unit_of_measurement }}</td>
+                                <td>{{ item.reorder_point }}</td>
+                                <td>{{ item.selling_price }}</td>
+                                <td>{{ item.manufactured }}</td>
+                                <td>{{ item.min_qty_for_manufacturing }}</td>
                             </tr>
-                        </thead>
-                    <tbody>
-                        {% for item in items %}
-                        <tr>
-                            <td><a href="{% url 'inventory:item_detail' pk=item.item_sku %}">{{ item.item_sku }}</a></td>
-                            <td>{{ item.item_name }}</td>
-                            <td>{{ item.item_group }}</td>
-                            <td>{{ item.unit_of_measurement }}</td>
-                            <td>{{ item.reorder_point }}</td>
-                            <td>{{ item.selling_price }}</td>
-                            <td>{{ item.manufactured }}</td>
-                            <td>{{ item.min_qty_for_manufacturing }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
  <script>
- // Item sku
+
         document.addEventListener('DOMContentLoaded', function () {
+        // Item sku
             document.getElementById('btn_search_sku').addEventListener('click', function () {
                 searchTable('search_sku');
             });
@@ -77,7 +151,7 @@
                     searchTable('search_sku');
                 }
             });
-
+        // Item Name
             document.getElementById('btn_search_name').addEventListener('click', function () {
                 searchTable('search_name');
             });
@@ -88,8 +162,59 @@
                 }
             });
 
+            // Item Group
+            document.getElementById('btn_search_group').addEventListener('click', function () {
+                searchTable('search_group');
+            });
 
-            // Need to finish the above listeners for other search boxes and buttons
+            document.getElementById('search_group').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    searchTable('search_group');
+                }
+            });
+
+            // Unit of Measurement
+            document.getElementById('btn_search_unit').addEventListener('click', function () {
+                searchTable('search_unit');
+            });
+
+            document.getElementById('search_unit').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    searchTable('search_unit');
+                }
+            });
+
+            // Reorder Point
+            document.getElementById('btn_search_reorder').addEventListener('click', function () {
+                searchRange('min_reorder', 'max_reorder', 'search_reorder');
+            });
+
+            // Selling Price
+            document.getElementById('btn_search_price').addEventListener('click', function () {
+                searchRange('min_price', 'max_price', 'search_price');
+            });
+
+            // Manufactured
+            document.getElementById('btn_search_manufactured').addEventListener('click', function () {
+                searchTable('search_manufactured');
+            });
+
+            document.getElementById('search_manufactured').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    searchTable('search_manufactured');
+                }
+            });
+
+            // Min. Quantity for Manufacturing
+            document.getElementById('btn_search_qty_manufacturing').addEventListener('click', function () {
+                searchTable('search_qty_manufacturing');
+            });
+
+            document.getElementById('search_qty_manufacturing').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    searchTable('search_qty_manufacturing');
+                }
+            });
 
             function searchTable(inputId) {
                 var input, filter, table, tr, td, i, txtValue;
@@ -109,9 +234,27 @@
                     }
                 }
             }
+
+            function searchRange(minInputId, maxInputId, searchInputId) {
+                var minInput = document.getElementById(minInputId);
+                var maxInput = document.getElementById(maxInputId);
+                var searchInput = document.getElementById(searchInputId);
+                var minFilter = minInput.value === '' ? Number.MIN_SAFE_INTEGER : parseFloat(minInput.value);
+                var maxFilter = maxInput.value === '' ? Number.MAX_SAFE_INTEGER : parseFloat(maxInput.value);
+                var table = document.getElementById('itemTable');
+                var tr = table.getElementsByTagName('tr');
+                for (var i = 0; i < tr.length; i++) {
+                    var td = tr[i].getElementsByTagName('td')[0];
+                    if (td) {
+                        var txtValue = parseFloat(td.textContent || td.innerText);
+                        if (txtValue >= minFilter && txtValue <= maxFilter) {
+                            tr[i].style.display = '';
+                        } else {
+                            tr[i].style.display = 'none';
+                        }
+                    }
+                }
+            }
         });
  </script>
 {% endblock %}
-
-
-

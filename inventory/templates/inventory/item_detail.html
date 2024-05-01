@@ -3,22 +3,80 @@
 {% block title %}Inventory{% endblock %}
 
 {% block content %}
+<div class="container mt-10">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">{{ item.item_sku }} {{ item.item_name }} Details</div>
 
-    <h1>Item Detail</h1>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="item_sku">Item SKU</label>
+                                <input type="text" class="form-control" value="{{ item.item_sku }}" readonly>
+                            </div>
+                        </div>
 
-    <p><strong>SKU:</strong> {{ item.item_sku }}</p>
-    <p><strong>Name:</strong> {{ item.item_name }}</p>
-    <p><strong>Group:</strong> {{ item.item_group }}</p>
-    <p><strong>Unit of Measurement:</strong> {{ item.unit_of_measurement }}</p>
-    <p><strong>Reorder Point:</strong> {{ item.reorder_point }}</p>
-    <p><strong>Selling Price:</strong> {{ item.selling_price }}</p>
-    <p><strong>Manufactured:</strong> {{ item.manufactured }}</p>
-    <p><strong>Min Qty for Manufacturing:</strong> {{ item.min_qty_for_manufacturing }}</p>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="item_name">Item Name</label>
+                                <input type="text" class="form-control" value="{{ item.item_name }}" readonly>
+                            </div>
+                        </div>
 
-    <a href="{% url 'inventory:edit_item' pk=item.item_sku %}"><button>Edit</button></a>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="item_group">Item Group</label>
+                                <input type="text" class="form-control" value="{{ item.item_group }}" readonly>
+                            </div>
+                        </div>
 
-    <a href="{% url 'inventory:item_delete' pk=item.pk %}" class="btn btn-danger">Delete</a>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="unit_of_measurement">Unit of Measurement</label>
+                                <input type="text" class="form-control" value="{{ item.unit_of_measurement }}" readonly>
+                            </div>
+                        </div>
 
-    <a href="{% url 'inventory:item_list' %}"><button>Back</button></a>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="reorder_point">Reorder Point</label>
+                                <input type="text" class="form-control" value="{{ item.reorder_point }}" readonly>
+                            </div>
+                        </div>
 
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="selling_price">Selling Price</label>
+                                <input type="text" class="form-control" value="{{ item.selling_price }}" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="manufactured">Manufactured</label>
+                                <input type="text" class="form-control" value="{{ item.manufactured }}" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="min_qty_for_manufacturing">Min. Quantity for Manufacturing</label>
+                                <input type="text" class="form-control" value="{{ item.min_qty_for_manufacturing }}" readonly>
+                            </div>
+                        </div>
+
+                        <a href="{% url 'inventory:item_list' %}" class="btn btn-secondary">Back</a>
+                        <a href="{% url 'inventory:edit_item' pk=item.item_sku %}" class="btn btn-primary">Edit</a>
+                        <button type="submit" class="btn btn-danger" id="deleteButton" style="position: absolute; bottom: 10px; right: 10px;">
+                            <i class="fas fa-trash-alt"></i>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

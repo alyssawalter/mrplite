@@ -3,13 +3,34 @@
 {% block title %}Item Group Detail{% endblock %}
 
 {% block content %}
-    <h1>Item Group Detail</h1>
-    <p><strong>Number:</strong> {{ item_group.item_group_number }}</p>
-    <p><strong>Name:</strong> {{ item_group.item_group_name }}</p>
-    <a href="{% url 'inventory:edit_item_group' pk=item_group.pk %}">Edit</a>
+<div class="container mt-10">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">Item Group {{ item_group.item_group_name }} Details</div>
 
-     <a href="{% url 'inventory:item_group_delete' pk=item_group.pk %}" class="btn btn-danger">Delete</a>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="item_group_number">Number</label>
+                            <input type="text" class="form-control" name="item_group_number" value="{{ item_group.item_group_number }}" readonly>
+                        </div>
 
-    <a href="{% url 'inventory:item_group_list' %}"><button>Back</button></a>
+                        <div class="form-group">
+                            <label for="item_group_name">Name</label>
+                            <input type="text" class="form-control" name="item_group_name" value="{{ item_group.item_group_name }}" readonly>
+                        </div>
 
+                        <a href="{% url 'inventory:edit_item_group' pk=item_group.pk %}" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'inventory:item_group_list' %}" class="btn btn-secondary">Back</a>
+                        <button type="submit" class="btn btn-danger" id="deleteButton" style="position: absolute; bottom: 10px; right: 10px;">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -3,11 +3,36 @@
 {% block title %}Item Group List{% endblock %}
 
 {% block content %}
-    <h1>Item Groups List</h1>
-    <ul>
-        {% for item_group in item_groups %}
-            <li><a href="{% url 'inventory:item_group_detail' pk=item_group.pk %}">{{ item_group.item_group_name }}</a></li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'inventory:create_item_group' %}">Create New Item Group</a>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-auto">
+                            <h1>Item Groups</h1>
+                        </div>
+                        <div class="col-auto">
+                            <a href="{% url 'inventory:create_item_group' %}" class="btn btn-primary">+ New Item Group</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Item Group Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item_group in item_groups %}
+                            <tr>
+                                <td><a href="{% url 'inventory:item_group_detail' pk=item_group.pk %}">{{ item_group.item_group_name }}</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -3,11 +3,107 @@
 {% block title %}Edit Item{% endblock %}
 
 {% block content %}
-    <h1>Edit Item</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-        <a href="{% url 'inventory:item_detail' pk=item.item_sku %}"><button>Cancel</button></a>
-    </form>
+<div class="container mt-10">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">Edit Item {{ item.item_sku }} {{ item.item_name }}</div>
+
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="{{ form.item_name.id_for_label }}">Item Name*</label>
+                                <input type="text" class="form-control" placeholder="Item Name" name="{{ form.item_name.html_name }}" id="{{ form.item_name.id_for_label }}" value="{{ item.item_name }}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="{{ form.item_group.id_for_label }}">Item Group</label>
+                                <select class="form-control" name="{{ form.item_group.html_name }}">
+                                    {% for group in form.item_group.field.queryset %}
+                                        <option value="{{ group.item_group_number }}" {% if group.item_group_number == item.item_group.item_group_number %}selected{% endif %}>{{ group.item_group_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="{{ form.unit_of_measurement.id_for_label }}">Unit of Measurement</label>
+                                <select class="form-control" name="{{ form.unit_of_measurement.html_name }}">
+                                    {% for value, label in form.unit_of_measurement.field.choices %}
+                                        <option value="{{ value }}" {% if value == item.unit_of_measurement %}selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="{{ form.reorder_point.id_for_label }}">Reorder Point</label>
+                                <input type="int" class="form-control" placeholder="Reorder Point" name="{{ form.reorder_point.html_name }}" id="{{ form.reorder_point.id_for_label }}" value="{{ item.reorder_point }}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="{{ form.selling_price.id_for_label }}">Selling Price</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-dollar-sign"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Price per Unit" name="{{ form.selling_price.html_name }}" id="{{ form.selling_price.id_for_label }}" value="{{ item.selling_price }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3 d-flex align-items-center" style="height: 100px">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="manufacturedCheckbox" {% if item.manufactured %}checked{% endif %}>
+                                    <label class="form-check-label" for="{{ form.manufactured.id_for_label }}" id="{{ form.manufactured.id_for_label }} ">This item is manufactured</label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group" id="minQtyManufacturingFieldWrapper" {% if not item.manufactured %}style="display: none;"{% endif %}>
+                                    <label for="{{ form.min_quantity_for_manufacturing.id_for_label }}">Minimum Quantity for Manufacturing</label>
+                                    <input type="text" class="form-control" placeholder="Min. Qty for Manufacturing" name="{{ form.min_quantity_for_manufacturing.html_name }}" id="{{ form.min_quantity_for_manufacturing.id_for_label }}" value="{{ item.min_qty_for_manufacturing }}">
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'inventory:item_list' %}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var manufacturedCheckbox = document.getElementById('manufacturedCheckbox');
+        var minQtyManufacturingFieldWrapper = document.getElementById('minQtyManufacturingFieldWrapper');
+
+        // Initially hide the "Minimum Quantity for Manufacturing" field if not manufactured
+        if (!manufacturedCheckbox.checked) {
+            minQtyManufacturingFieldWrapper.style.display = 'none';
+        }
+
+        // Add event listener to checkbox
+        manufacturedCheckbox.addEventListener('change', function () {
+            // If checkbox is checked, show the field; otherwise, hide it
+            if (manufacturedCheckbox.checked) {
+                minQtyManufacturingFieldWrapper.style.display = 'block';
+            } else {
+                minQtyManufacturingFieldWrapper.style.display = 'none';
+            }
+        });
+    });
+</script>
 {% endblock %}

@@ -3,11 +3,34 @@
 {% block title %}Unit of Measurement Detail{% endblock %}
 
 {% block content %}
-    <h1>Unit of Measurement Detail</h1>
-    <p><strong>ID:</strong> {{ unit_of_measurement.pk }}</p>
-    <p><strong>Name:</strong> {{ unit_of_measurement.unit_of_measurement }}</p>
-    <a href="{% url 'inventory:edit_unit_of_measurement' pk=unit_of_measurement.pk %}">Edit</a>
-    <a href="{% url 'inventory:unit_of_measurement_delete' pk=unit_of_measurement.pk %}" class="btn btn-danger">Delete</a>
-    <a href="{% url 'inventory:unit_of_measurement_list' %}"><button>Back</button></a>
+<div class="container mt-10">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">Unit of Measurement {{ unit_of_measurement.unit_of_measurement }} Details</div>
 
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="unit_of_measurement_id">ID</label>
+                            <input type="text" class="form-control" name="unit_of_measurement_id" value="{{ unit_of_measurement.pk }}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="unit_of_measurement_name">Name</label>
+                            <input type="text" class="form-control" name="unit_of_measurement_name" value="{{ unit_of_measurement.unit_of_measurement }}" readonly>
+                        </div>
+
+                        <a href="{% url 'inventory:edit_unit_of_measurement' pk=unit_of_measurement.pk %}" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'inventory:unit_of_measurement_list' %}" class="btn btn-secondary">Back</a>
+                        <button type="submit" class="btn btn-danger" id="deleteButton" style="position: absolute; bottom: 10px; right: 10px;">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
