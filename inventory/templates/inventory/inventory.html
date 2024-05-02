@@ -2,39 +2,97 @@
 
 {% block title %}Inventory{% endblock %}
 
+{% block extra_head %}
+    <link href="https://cdn.datatables.net/v/bs4/dt-2.0.5/b-3.0.2/b-colvis-3.0.2/b-print-3.0.2/cr-2.0.1/fh-4.0.1/r-3.0.2/sb-1.7.1/sp-2.3.1/datatables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/v/bs4/dt-2.0.5/b-3.0.2/b-colvis-3.0.2/b-print-3.0.2/cr-2.0.1/fh-4.0.1/r-3.0.2/sb-1.7.1/sp-2.3.1/datatables.min.js"></script>
+{% endblock %}
+
 {% block content %}
-    <h1>Inventory</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Item SKU</th>
-                <th>Item Name</th>
-                <th>Item Group</th>
-                <th>Unit of Measurement</th>
-                <th>Unit Cost</th>
-                <th>Quantity</th>
-                <th>Physical Quantity</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in items %}
-            <tr>
-                <td>{{ item.item_sku }}</td>
-                <td>{{ item.item_name }}</td>
-                <td>{{ item.item_group.item_group_name }}</td>
-                <td>{{ item.unit_of_measurement.unit_of_measurement }}</td>
-                <td>{{ item.cost }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>
-                    <form method="post">
-                        {% csrf_token %}
-                         <input type="hidden" name="item_sku" value="{{ item.item_sku }}">
-                        {{ inventory_form.quantity }}
-                        <button type="submit">Update</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Inventory</h3>
+    </div>
+
+    <div class="card-body">
+        <div id="inventory_table_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+                <div class="col-sm-12 col-md-6"></div>
+                <div class="col-sm-12 col-md-6"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="inventory_table" class="table display table-bordered table-hover dataTable dtr-inline" aria-describedby="inventory_table_info">
+                        <thead>
+                            <tr>
+                                <th class="sorting sorting_asc" tabindex="0" aria-controls="inventory_table" rowspan="1" colspan="1" aria-label="Item SKU: activate to sort column descending" aria-sort="ascending">Item SKU</th>
+                                <th class="sorting" tabindex="0" aria-controls="inventory_table" rowspan="1" colspan="1" aria-label="Item Name: activate to sort column ascending">Item Name</th>
+                                <th class="sorting" tabindex="0" aria-controls="inventory_table" rowspan="1" colspan="1" aria-label="Item Group: activate to sort column ascending">Item Group</th>
+                                <th class="sorting" tabindex="0" aria-controls="inventory_table" rowspan="1" colspan="1" aria-label="UoM: activate to sort column ascending">UoM</th>
+                                <th class="sorting" tabindex="0" aria-controls="inventory_table" rowspan="1" colspan="1" aria-label="Cost: activate to sort column ascending">Cost</th>
+                                <th class="sorting" tabindex="0" aria-controls="inventory_table" rowspan="1" colspan="1" aria-label="Cost: activate to sort column ascending">Quantity</th>
+                                <th>Physical Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                                <tr>
+                                    <td class="dtr-control sorting_1">{{ item.item_sku }}</td>
+                                    <td>{{ item.item_name }}</td>
+                                    <td>{{ item.item_group.item_group_name }}</td>
+                                    <td>{{ item.unit_of_measurement.unit_of_measurement }}</td>
+                                    <td>{{ item.cost }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="item_sku" value="{{ item.item_sku }}">
+                                            {{ inventory_form.quantity }}
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th rowspan="1" colspan="1">Item SKU</th>
+                                <th rowspan="1" colspan="1">Item Name</th>
+                                <th rowspan="1" colspan="1">Item Group</th>
+                                <th rowspan="1" colspan="1">UoM</th>
+                                <th rowspan="1" colspan="1">Cost</th>
+                                <th rowspan="1" colspan="1">Quantity</th>
+                                <th rowspan="1" colspan="1">Physical Quantity</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-5">
+                    <div class="dataTables_info" id="inventory_table_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="inventory_table_paginate">
+                        <!-- Pagination buttons -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Initialize DataTable -->
+<script>
+    $(document).ready( function () {
+        $('#inventory_table').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+        });
+    });
+</script>
 {% endblock %}

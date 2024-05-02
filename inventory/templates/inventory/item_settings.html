@@ -3,9 +3,20 @@
 {% block title %}Item Settings{% endblock %}
 
 {% block content %}
-    <h1>Item Settings</h1>
-    <ul>
-        <li><a href="{{ item_group_list_url }}">Item Groups</a></li>
-        <li><a href="{{ unit_of_measurement_list_url }}">Unit of Measurements</a></li>
-    </ul>
+    <div class="container mt-10">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">Item Settings</div>
+
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{{ item_group_list_url }}">Item Groups</a></li>
+                        <li class="list-group-item"><a href="{{ unit_of_measurement_list_url }}">Unit of Measurement</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

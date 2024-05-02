@@ -3,10 +3,28 @@
 {% block title %}Edit Unit of Measurement{% endblock %}
 
 {% block content %}
-    <h1>Edit Unit of Measurement</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-    </form>
+    <div class="container mt-10">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">Edit Unit of Measurement</div>
+
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="{{ form.unit_of_measurement.id_for_label }}">Unit of Measurement*</label>
+                                <input type="text" class="form-control" value="{{ unit_of_measurement.unit_of_measurement }}" placeholder="Unit of Measurement" name="{{ form.unit_of_measurement.html_name }}" id="{{ form.unit_of_measurement.id_for_label }}" >
+                            </div>
+                        </div>
+
+                        <a href="{% url 'inventory:unit_of_measurement_list' %}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -3,10 +3,27 @@
 {% block title %}Edit Item Group{% endblock %}
 
 {% block content %}
-    <h1>Edit Item Group</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-    </form>
+<div class="container mt-10">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">Edit Item Group</div>
+
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="{{ form.item_group_name.id_for_label }}">Item Group Name*</label>
+                                <input type="text" class="form-control" placeholder="Item Group Name" name="{{ form.item_group_name.html_name }}" id="{{ form.item_group_name.id_for_label }}" value="{{ item_group.item_group_name }}">
+                            </div>
+                        </div>
+                        <a href="{% url 'inventory:item_group_list' %}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
