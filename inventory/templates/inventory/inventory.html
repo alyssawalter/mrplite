@@ -3,8 +3,9 @@
 {% block title %}Inventory{% endblock %}
 
 {% block extra_head %}
-    <link href="https://cdn.datatables.net/v/bs4/dt-2.0.5/b-3.0.2/b-colvis-3.0.2/b-print-3.0.2/cr-2.0.1/fh-4.0.1/r-3.0.2/sb-1.7.1/sp-2.3.1/datatables.min.css" rel="stylesheet">
-    <script src="https://cdn.datatables.net/v/bs4/dt-2.0.5/b-3.0.2/b-colvis-3.0.2/b-print-3.0.2/cr-2.0.1/fh-4.0.1/r-3.0.2/sb-1.7.1/sp-2.3.1/datatables.min.js"></script>
+    <link rel="stylesheet" href="/static/admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/static/admin-lte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/static/admin-lte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 {% endblock %}
 
 {% block content %}
@@ -21,22 +22,22 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <table id="inventory_table" class="table display table-bordered table-hover dataTable dtr-inline" aria-describedby="inventory_table_info">
+                    <table id="inventory_table" class="table table-bordered table-hover dataTable dtr-inline">
                         <thead>
                             <tr>
-                                <th class="sorting sorting_asc" tabindex="0" aria-controls="inventory_table" rowspan="1" colspan="1" aria-label="Item SKU: activate to sort column descending" aria-sort="ascending">Item SKU</th>
-                                <th class="sorting" tabindex="0" aria-controls="inventory_table" rowspan="1" colspan="1" aria-label="Item Name: activate to sort column ascending">Item Name</th>
-                                <th class="sorting" tabindex="0" aria-controls="inventory_table" rowspan="1" colspan="1" aria-label="Item Group: activate to sort column ascending">Item Group</th>
-                                <th class="sorting" tabindex="0" aria-controls="inventory_table" rowspan="1" colspan="1" aria-label="UoM: activate to sort column ascending">UoM</th>
-                                <th class="sorting" tabindex="0" aria-controls="inventory_table" rowspan="1" colspan="1" aria-label="Cost: activate to sort column ascending">Cost</th>
-                                <th class="sorting" tabindex="0" aria-controls="inventory_table" rowspan="1" colspan="1" aria-label="Cost: activate to sort column ascending">Quantity</th>
+                                <th class="sorting">Item SKU</th>
+                                <th class="sorting">Item Name</th>
+                                <th class="sorting">Item Group</th>
+                                <th class="sorting">UoM</th>
+                                <th class="sorting">Cost</th>
+                                <th class="sorting">Quantity</th>
                                 <th>Physical Quantity</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for item in items %}
                                 <tr>
-                                    <td class="dtr-control sorting_1">{{ item.item_sku }}</td>
+                                    <td>{{ item.item_sku }}</td>
                                     <td>{{ item.item_name }}</td>
                                     <td>{{ item.item_group.item_group_name }}</td>
                                     <td>{{ item.unit_of_measurement.unit_of_measurement }}</td>
@@ -80,19 +81,42 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+<!-- DataTable Javascript -->
+<script src="/static/admin-lte/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/static/admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/static/admin-lte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/static/admin-lte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="/static/admin-lte/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/static/admin-lte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="/static/admin-lte/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="/static/admin-lte/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="/static/admin-lte/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 
 <!-- Initialize DataTable -->
 <script>
-    $(document).ready( function () {
-        $('#inventory_table').DataTable({
-          "paging": true,
-          "lengthChange": false,
-          "searching": false,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false,
-          "responsive": true,
-        });
-    });
+    new DataTable('#inventory_table', {
+    layout: {
+        bottomEnd: {
+            paging: {
+                boundaryNumbers: false
+            }
+        }
+    }
+});
 </script>
+
+<!-- Javascript from base.html  -->
+<script src="/static/admin-lte/plugins/jquery/jquery.min.js"></script>
+<script src="/static/admin-lte/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button);
+</script>
+<script src="/static/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js "></script>
+<script src="/static/admin-lte/dist/js/adminlte.min.js"></script>
+<script src="/static/admin-lte/dist/js/demo.js"></script>
 {% endblock %}
+
