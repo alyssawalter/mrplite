@@ -7,22 +7,23 @@ from .forms import ItemForm, EditItemForm, \
     UnitOfMeasurementForm, EditUnitOfMeasurementForm, \
     InventoryQuantityForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
-class ItemListView(ListView):
+class ItemListView(LoginRequiredMixin, ListView):
     model = Item
     template_name = 'inventory/item_list.html'
     context_object_name = 'items'
     ordering = ['item_sku']
 
 
-class ItemDetailView(DetailView):
+class ItemDetailView(LoginRequiredMixin, DetailView):
     model = Item
     template_name = 'inventory/item_detail.html'
     context_object_name = 'item'
 
 
-class ItemCreateView(CreateView):
+class ItemCreateView(LoginRequiredMixin, CreateView):
     model = Item
     template_name = 'inventory/create_item.html'
     form_class = ItemForm
@@ -34,7 +35,7 @@ class ItemCreateView(CreateView):
         return reverse_lazy('inventory:item_detail', kwargs={'pk': self.object.item_sku})
 
 
-class ItemUpdateView(UpdateView):
+class ItemUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Item
     template_name = 'inventory/edit_item.html'
     form_class = EditItemForm
@@ -44,7 +45,7 @@ class ItemUpdateView(UpdateView):
         return reverse_lazy('inventory:item_detail', kwargs={'pk': self.object.item_sku})
 
 
-class ItemDeleteView(DeleteView):
+class ItemDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Item
     template_name = 'inventory/item_confirm_delete.html'
     success_url = reverse_lazy('inventory:item_list')

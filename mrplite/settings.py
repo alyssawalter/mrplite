@@ -36,8 +36,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'core',
     'inventory',
     'procurement',
+    'users',
     'adminlte3',
     'adminlte3_theme',
     'django.contrib.admin',
