@@ -8,6 +8,7 @@ from .forms import ItemForm, EditItemForm, \
     InventoryQuantityForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
 
 
 class ItemListView(LoginRequiredMixin, ListView):
@@ -15,6 +16,9 @@ class ItemListView(LoginRequiredMixin, ListView):
     template_name = 'inventory/item_list.html'
     context_object_name = 'items'
     ordering = ['item_sku']
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
 
 
 class ItemDetailView(LoginRequiredMixin, DetailView):
@@ -29,13 +33,19 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
     form_class = ItemForm
 
     def form_valid(self, form):
+        form.instance.user = self.request.user  # set the user field of the object to be the user currently logged in
         return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user  # Pass the currently logged-in user to the form
+        return kwargs
 
     def get_success_url(self):
         return reverse_lazy('inventory:item_detail', kwargs={'pk': self.object.item_sku})
 
 
-class ItemUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class ItemUpdateView(LoginRequiredMixin, UpdateView):
     model = Item
     template_name = 'inventory/edit_item.html'
     form_class = EditItemForm
@@ -44,8 +54,14 @@ class ItemUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('inventory:item_detail', kwargs={'pk': self.object.item_sku})
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
-class ItemDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+
+# need to create this template still
+class ItemDeleteView(LoginRequiredMixin, DeleteView):
     model = Item
     template_name = 'inventory/item_confirm_delete.html'
     success_url = reverse_lazy('inventory:item_list')
@@ -55,19 +71,22 @@ class ItemDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return super().delete(request, *args, **kwargs)
 
 
-class ItemGroupListView(ListView):
+class ItemGroupListView(LoginRequiredMixin, ListView):
     model = ItemGroup
     template_name = 'inventory/item_group_list.html'
     context_object_name = 'item_groups'
 
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
 
-class ItemGroupDetailView(DetailView):
+
+class ItemGroupDetailView(LoginRequiredMixin, DetailView):
     model = ItemGroup
     template_name = 'inventory/item_group_detail.html'
     context_object_name = 'item_group'
 
 
-class CreateItemGroupView(CreateView):
+class CreateItemGroupView(LoginRequiredMixin, CreateView):
     model = ItemGroup
     form_class = ItemGroupForm
     template_name = 'inventory/create_item_group.html'
@@ -76,17 +95,21 @@ class CreateItemGroupView(CreateView):
         return reverse_lazy('inventory:item_group_detail', kwargs={'pk': self.object.pk})
 
 
-class EditItemGroupView(UpdateView):
+class EditItemGroupView(LoginRequiredMixin, UpdateView):
     model = ItemGroup
     form_class = EditItemGroupForm
     template_name = 'inventory/edit_item_group.html'
     context_object_name = 'item_group'
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user  # set the user field of the object to be the user currently logged in
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse_lazy('inventory:item_group_detail', kwargs={'pk': self.object.pk})
 
 
-class ItemGroupDeleteView(DeleteView):
+class ItemGroupDeleteView(LoginRequiredMixin, DeleteView):
     model = ItemGroup
     template_name = 'inventory/item_group_confirm_delete.html'
     success_url = reverse_lazy('inventory:item_group_list')
@@ -96,28 +119,35 @@ class ItemGroupDeleteView(DeleteView):
         return super().delete(request, *args, **kwargs)
 
 
-class UnitOfMeasurementListView(ListView):
+class UnitOfMeasurementListView(LoginRequiredMixin, ListView):
     model = UnitOfMeasurement
     template_name = 'inventory/unit_of_measurement_list.html'
     context_object_name = 'unit_of_measurements'
 
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
 
-class UnitOfMeasurementDetailView(DetailView):
+
+class UnitOfMeasurementDetailView(LoginRequiredMixin, DetailView):
     model = UnitOfMeasurement
     template_name = 'inventory/unit_of_measurement_detail.html'
     context_object_name = 'unit_of_measurement'
 
 
-class CreateUnitOfMeasurementView(CreateView):
+class CreateUnitOfMeasurementView(LoginRequiredMixin, CreateView):
     model = UnitOfMeasurement
     form_class = UnitOfMeasurementForm
     template_name = 'inventory/create_unit_of_measurement.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user  # set the user field of the object to be the user currently logged in
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('inventory:unit_of_measurement_detail', kwargs={'pk': self.object.pk})
 
 
-class EditUnitOfMeasurementView(UpdateView):
+class EditUnitOfMeasurementView(LoginRequiredMixin, UpdateView):
     model = UnitOfMeasurement
     form_class = EditUnitOfMeasurementForm
     template_name = 'inventory/edit_unit_of_measurement.html'
@@ -127,7 +157,7 @@ class EditUnitOfMeasurementView(UpdateView):
         return reverse_lazy('inventory:unit_of_measurement_detail', kwargs={'pk': self.object.pk})
 
 
-class UnitOfMeasurementDeleteView(DeleteView):
+class UnitOfMeasurementDeleteView(LoginRequiredMixin, DeleteView):
     model = UnitOfMeasurement
     template_name = 'inventory/unit_of_measurement_confirm_delete.html'
     success_url = reverse_lazy('inventory:unit_of_measurement_list')
@@ -137,7 +167,7 @@ class UnitOfMeasurementDeleteView(DeleteView):
         return super().delete(request, *args, **kwargs)
 
 
-class ItemSettingsView(View):
+class ItemSettingsView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         context = {
             'item_group_list_url': reverse_lazy('inventory:item_group_list'),
@@ -146,8 +176,9 @@ class ItemSettingsView(View):
         return render(request, 'inventory/item_settings.html', context)
 
 
+@login_required
 def inventory(request):
-    items = Item.objects.order_by('item_sku')
+    items = Item.objects.filter(user=request.user).order_by('item_sku')
     if request.method == 'POST':
         form = InventoryQuantityForm(request.POST)
         print(request.POST)

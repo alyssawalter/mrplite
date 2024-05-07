@@ -3,6 +3,10 @@ from .models import Item, ItemGroup, UnitOfMeasurement
 
 
 class ItemForm(forms.ModelForm):
+    def __init__(self, user, *args, **kwargs):
+        super(ItemForm, self).__init__(*args, **kwargs)
+        self.fields['item_group'].queryset = ItemGroup.objects.filter(user=user)
+        self.fields['unit_of_measurement'].queryset = UnitOfMeasurement.objects.filter(user=user)
     class Meta:
         model = Item
         fields = ['item_sku', 'item_name', 'item_group', 'unit_of_measurement',
@@ -10,6 +14,11 @@ class ItemForm(forms.ModelForm):
 
 
 class EditItemForm(forms.ModelForm):
+    def __init__(self, user, *args, **kwargs):
+        super(EditItemForm, self).__init__(*args, **kwargs)
+        self.fields['item_group'].queryset = ItemGroup.objects.filter(user=user)
+        self.fields['unit_of_measurement'].queryset = UnitOfMeasurement.objects.filter(user=user)
+
     # cant update the sku
     class Meta:
         model = Item

@@ -1,5 +1,7 @@
 {% load adminlte_helpers i18n %}
-{% load static %}<!DOCTYPE html>
+{% load static %}
+
+<!DOCTYPE html>
 <html>
 <head>
     {% block title_outer %}
@@ -15,7 +17,7 @@
     {% block stylesheets %}
         {% include 'adminlte/lib/_styles.html' %}
         <style>
-            /* Center the registration box horizontally and vertically */
+            /* Center the login box horizontally and vertically */
             body, html {
                 height: 100%;
                 margin: 0;
@@ -25,12 +27,12 @@
             }
 
             /* Center the logo */
-            .register-logo {
+            .login-logo {
                 text-align: center;
             }
 
             /* Style the logo image */
-            .register-logo img {
+            .login-logo img {
                 width: 250px; /* Adjust the width as needed */
                 display: block; /* Ensure the image is centered */
                 margin: 0 auto; /* Center the image horizontally */
@@ -42,16 +44,17 @@
 
     {% block extra_head %}{% endblock %}
 </head>
+<body>
 {% block body %}
-<div class="register-box">
-    <div class="register-logo">
+<div class="login-box">
+    <div class="login-logo">
         <a href="{% url 'dashboard' %}">
             <img src="{% static 'inventory/logo.png' %}" alt="MRP Lite Logo">
         </a>
     </div>
     <div class="card">
-        <div class="card-body register-card-body">
-            <p class="login-box-msg">Let's start a free trial!</p>
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">Sign in</p>
 
             {% if messages %}
                 <ul>
@@ -72,56 +75,33 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="Email" name="email">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-envelope"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Password" name="password1">
+                    <input type="password" class="form-control" placeholder="Password" name="password">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
                         </div>
                     </div>
                 </div>
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Retype password" name="password2">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
-                <div id="password-error" class="text-danger"></div>
                 <div class="row">
                     <div class="col-8">
                         <div class="icheck-primary">
-                            <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                            <label for="agreeTerms">
-                                I agree to the <a href="#">terms</a>
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">
+                                Remember Me
                             </label>
                         </div>
                     </div>
                     <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Signup</button>
+                        <button type="submit" class="btn btn-primary btn-block">Log In</button>
                     </div>
                 </div>
             </form>
-<!--            <div class="social-auth-links text-center">-->
-<!--                <p>- OR -</p>-->
-<!--                <a href="#" class="btn btn-block btn-primary">-->
-<!--                    <i class="fab fa-facebook mr-2"></i>-->
-<!--                    Sign up using Facebook-->
-<!--                </a>-->
-<!--                <a href="#" class="btn btn-block btn-danger">-->
-<!--                    <i class="fab fa-google-plus mr-2"></i>-->
-<!--                    Sign up using Google+-->
-<!--                </a>-->
-<!--            </div>-->
-            <a href="{% url 'login' %}" class="text-center">I already have an account</a>
+            <p class="mb-1">
+                <a href="{% url 'password_reset' %}">I forgot my password</a>
+            </p>
+            <p class="mb-0">
+                <a href="{% url 'signup' %}" class="text-center">Register a new account</a>
+            </p>
         </div>
     </div>
 </div>
@@ -136,3 +116,13 @@
 {% block extra_foot %}{% endblock %}
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+

@@ -1,79 +1,90 @@
-{% extends 'adminlte/lib/_main_sidebar.html' %}
-{% load static %}
-
-<!-- Set upper left corner logo -->
-{% block logo %}
-    <a href="/" class="brand-link logo-switch">
+{% load adminlte_helpers %}
+{%load static %}
+<!-- Left side column. contains the sidebar -->
+<aside class="main-sidebar sidebar-light-primary elevation-4">
+     <!-- Brand Logo -->
+    {% block logo %}
+        <a href="/" class="brand-link logo-switch">
         <img src="{%static 'inventory/logo.png' %}" alt="MRP Lite Logo" class="brand-image-xl logo-xl"
              style="left: 12px">
+        </a>
+    {% endblock %}
+    <!-- sidebar: style can be found in sidebar.less -->
+    <div class="sidebar">
+        <!-- Sidebar user panel -->
+        {% block user_panel %}
+        <!-- Sidebar user panel (optional) -->
+        {% endblock %}
 
-    </a>
-{% endblock logo %}
+        {% block form %}{% endblock %}
 
-<!-- Remove user panel from left sidebar -->
-{% block user_panel %}
-{% endblock user_panel %}
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        {% block nav_links_ul %}
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar nav-child-indent flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            {% block nav_links_outer %}
+            <li class="nav-header">{% block nav_heading %}MAIN NAVIGATION{% endblock %}</li>
 
-<!-- Set header for side navbar -->
-{% block nav_heading %}
-WHERE TO GO
-{% endblock nav_heading %}
+            {% block nav_links %}
+                <!-- Inventory Section -->
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-archive"></i>
+                    <p>
+                      Inventory
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                      <a href="{% url 'inventory:inventory' %}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Inventory</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{% url 'inventory:item_list' %}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Items</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Item Settings</p>
+                        <i class="right fas fa-angle-left"></i>
+                      </a>
+                      <ul class="nav nav-treeview">
+                        <li class="nav-item nav-child-indent">
+                          <a href="{% url 'inventory:unit_of_measurement_list' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Unit of Measurement</p>
+                          </a>
+                        </li>
+                        <li class="nav-item nav-child-indent">
+                          <a href="{% url 'inventory:item_group_list' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Item Groups</p>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
 
-<!-- Define navbar links -->
-{% block nav_links %}
+                <!-- Admin Section -->
+                <li class="nav-item">
+                  <a href="{% url 'admin:index' %}" class="nav-link">
+                    <i class="nav-icon fas fa-cogs"></i>
+                    <p>Admin</p>
+                  </a>
+                </li>
 
-    <!-- Inventory Section -->
-    <li class="nav-item">
-      <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-archive"></i>
-        <p>
-          Inventory
-          <i class="right fas fa-angle-left"></i>
-        </p>
-      </a>
-      <ul class="nav nav-treeview">
-          <li class="nav-item">
-          <a href="{% url 'inventory:inventory' %}" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Inventory</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{% url 'inventory:item_list' %}" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Items</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Item Settings</p>
-            <i class="right fas fa-angle-left"></i>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{% url 'inventory:unit_of_measurement_list' %}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Unit of Measurement</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{% url 'inventory:item_group_list' %}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Item Groups</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-
-    <!-- Admin Section -->
-    <li class="nav-item">
-      <a href="{% url 'admin:index' %}" class="nav-link">
-        <i class="nav-icon fas fa-cogs"></i>
-        <p>Admin</p>
-      </a>
-    </li>
-
-{% endblock nav_links %}
+            {% endblock nav_links %}
+            {% endblock nav_links_outer %}
+            </ul>
+            </nav>
+        {% endblock nav_links_ul %}
+    </div>
+    <!-- /.sidebar -->
+</aside>
