@@ -1,0 +1,9 @@
+{% extends 'adminlte/base.html' %}
+{% load adminlte_helpers %}
+{% load static %}
+
+    {% block stylesheets %}
+        {% include 'adminlte/lib/_styles.html' %}
+        <link rel="stylesheet" href="{% static 'css/custom-theme.css' %}">
+    {% endblock %}
+

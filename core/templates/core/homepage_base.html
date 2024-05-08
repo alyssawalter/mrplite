@@ -1,0 +1,135 @@
+{% load adminlte_helpers i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% block title_outer %}
+        <title>{% block title %}{{ site.name }}{% endblock %}</title>
+    {% endblock %}
+
+    {% block meta %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    {% endblock %}
+
+    {% block stylesheets %}
+        {% include 'adminlte/lib/_styles.html' %}
+        <link rel="stylesheet" href="{% static 'css/custom-theme.css' %}">
+    {% endblock %}
+
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body class="layout-top-nav {% block body_class %}{% block bodyclass %}{% endblock %}{% endblock %}">
+
+{% block body %}
+    <div class="wrapper">
+        {% block nav_header %}
+            <nav class="main-header navbar navbar-expand-md navbar-white navbar-light">
+            <!-- Header Navbar: style can be found in header.less -->
+            {% block nav_bar %}
+                <a href="/" class="navbar-brand">
+                    <img src="{%static 'inventory/logo.png' %}" alt="MRP Lite Logo" class="brand-image"
+                    style="left: 12px; width: 120px; height: auto;">
+                </a>
+                <!-- Left navbar links -->
+                <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                    <ul class="navbar-nav">
+                        <li class="nav-item d-none d-sm-inline-block dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Features</a>
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item">Feature 1</a>
+                                <a href="#" class="dropdown-item">Feature 2</a>
+                                <a href="#" class="dropdown-item">Feature 3</a>
+                            </div>
+                        </li>
+                        <li class="nav-item d-none d-sm-inline-block">
+                            <a href="/" class="nav-link">Use Cases</a>
+                        </li>
+                        <li class="nav-item d-none d-sm-inline-block">
+                            <a href="/" class="nav-link">Pricing</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Login Button -->
+                        <li class="nav-item">
+                            <a href="account/login" class="login-button nav-link">Sign in</a>
+                        </li>
+                    </ul>
+                </div>
+            {% endblock %}
+            </nav>
+        {% endblock %}
+
+
+        {% block nav_sidebar %}
+        {% endblock %}
+
+
+        {% block content_wrapper %}
+        <div class="content-wrapper" style="min-height: 834px;">
+            {% block content_header %}
+                <section class="content-header">
+                    {% block no_heading %}
+                        <h1>
+                            {% block page_name %}{% endblock %}
+                            <div class="header-actions">
+                                {% block page_actions %}{% endblock %}
+                            </div>
+                            {% block no_description %}
+                            <small>{% block page_description %}{% endblock %}</small>
+                            {% endblock %}
+                        </h1>
+                        {% block breadcrumbs %}
+                            {# Breadcrumb implementation left to developers #}
+                        {% endblock %}
+                    {% endblock no_heading %}
+                </section>
+            {% endblock %}
+
+            {% block content_outer %}
+            <section class="content">
+                {% block content_block_wrap %}
+                    {% block content %}{% endblock %}
+                {% endblock %}
+            </section>
+            {% endblock %}
+
+
+        {% endblock content_wrapper %}
+
+        {% block nav_footer %}
+            <footer class="main-footer fixed-bottom">
+                <div class="float-right d-none d-sm-inline">
+                {% block footer_right %}
+                    <b>Version</b> {% block version %}0.1{% endblock %}
+                {% endblock %}
+                </div>
+
+                {% block footer_left %}
+                {% block legal %}
+                <strong>Copyright &copy; {% now "Y" %}{% if not site %}.{% endif %}
+                    {% if site %}
+                        <a href="http://{{ site.domain }}">{{ site.name }}</a>
+                    {% endif %}
+                </strong> All rights
+                reserved.
+                {% endblock %}
+                {% endblock %}
+            </footer>
+        {% endblock %}
+        </div>
+    </div>
+{% endblock body %}
+
+{% block javascript %}
+{% include 'adminlte/lib/_scripts.html' %}
+{% endblock %}
+
+{% block extra_js %}{% endblock %}
+
+{% block extra_foot %}{% endblock %}
+</body>
+</html>

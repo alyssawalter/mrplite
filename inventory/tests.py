@@ -3,9 +3,13 @@ from django.urls import reverse
 from .models import Item, ItemGroup, UnitOfMeasurement
 from .forms import ItemForm, EditItemForm, ItemGroupForm, EditItemGroupForm, \
     UnitOfMeasurementForm, EditUnitOfMeasurementForm
+from django.contrib.auth.models import User
 
 
 class ItemFormTests(TestCase):
+    def setUp(self):
+        # Create a user for testing
+        self.user = User.objects.create_user(username='testuser', password='password')
     def test_item_form_valid(self):
         form_data = {
             'item_sku': 'TEST-SKU',
@@ -15,7 +19,8 @@ class ItemFormTests(TestCase):
             'reorder_point': 10,
             'selling_price': 5.00,
             'manufactured': True,
-            'min_qty_for_manufacturing': 20
+            'min_qty_for_manufacturing': 20,
+            'user': self.user
         }
         form = ItemForm(data=form_data)
         self.assertTrue(form.is_valid())
@@ -27,6 +32,9 @@ class ItemFormTests(TestCase):
 
 class ItemUpdateViewTests(TestCase):
     def setUp(self):
+        # Create a user for testing
+        self.user = User.objects.create_user(username='testuser', password='password')
+
         self.item = Item.objects.create(
             item_sku='TEST-SKU',
             item_name='Test Item',
@@ -35,10 +43,14 @@ class ItemUpdateViewTests(TestCase):
             reorder_point=10,
             selling_price=5.00,
             manufactured=True,
-            min_qty_for_manufacturing=20
+            min_qty_for_manufacturing=20,
+            user=self.user
         )
 
     def test_item_update_view(self):
+        # Log in the user
+        self.client.login(username='testuser', password='password')
+
         url = reverse('inventory:edit_item', kwargs={'pk': self.item.item_sku})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -48,6 +60,9 @@ class ItemUpdateViewTests(TestCase):
 class EditItemFormTests(TestCase):
 
     def setUp(self):
+        # Create a user
+        self.user = User.objects.create_user(username='testuser', password='password')
+
         # Create item group
         self.item_group = ItemGroup.objects.create(item_group_name='Test Group')
 
@@ -63,7 +78,8 @@ class EditItemFormTests(TestCase):
             reorder_point=10,
             selling_price=100,
             manufactured=True,
-            min_qty_for_manufacturing=20
+            min_qty_for_manufacturing=20,
+            user=self.user
         )
 
         self.valid_data = {
@@ -74,6 +90,7 @@ class EditItemFormTests(TestCase):
             'manufactured': False,
             'min_qty_for_manufacturing': 25,
             'unit_of_measurement': self.uom,
+            'user': self.user
         }
 
         # leaving required info blank

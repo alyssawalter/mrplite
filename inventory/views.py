@@ -91,6 +91,10 @@ class CreateItemGroupView(LoginRequiredMixin, CreateView):
     form_class = ItemGroupForm
     template_name = 'inventory/create_item_group.html'
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user  # set the user field of the object to be the user currently logged in
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse_lazy('inventory:item_group_detail', kwargs={'pk': self.object.pk})
 

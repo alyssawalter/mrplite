@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-<p>This is the homepage.</p>
-</body>
-</html>
+{% extends 'core/homepage_base.html' %}
+{% load adminlte_helpers i18n %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+
+{% block content %}
+<div class="container vh-100">
+    <div class="row mt-5 align-items-center justify-content-center py-5">
+        <!-- Text Section -->
+        <div class="col-lg-6 align-self-center">
+            <h1 class="display-4">Simple manufacturing solutions for small business success.</h1>
+        </div>
+
+        <!-- Image Section -->
+        <div class="col-lg-6 text-center">
+            <div class="row">
+                <img src="{% static 'core/assets/mockup-mrplite-homepage.png' %}" alt="MRP Lite Mockup" class="img-fluid">
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-6 text-center">
+                    <a href="/account/signup" class="btn btn-primary btn-lg">Start for Free</a>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <a href="#" class="btn btn-secondary btn-lg">Get a Demo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

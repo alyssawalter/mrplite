@@ -16,6 +16,8 @@
 
     {% block stylesheets %}
         {% include 'adminlte/lib/_styles.html' %}
+        <!--    MRP Lite brand colors-->
+        <link rel="stylesheet" href="{% static 'css/custom-theme.css' %}">
         <style>
             /* Center the login box horizontally and vertically */
             body, html {
@@ -92,7 +94,7 @@
                         </div>
                     </div>
                     <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                        <button type="submit" class="btn btn-secondary btn-block">Log In</button>
                     </div>
                 </div>
             </form>
